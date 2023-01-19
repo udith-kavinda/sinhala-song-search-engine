@@ -51,8 +51,8 @@ based on the identified fields
 
 Following images shows the example search result of the UI.
 
-![Search Example of UI](./images/search_results1.PNG)
+![Search Example of UI](./images/search_results1.jpg)
 
-![Search Example of UI](./images/search_results2.PNG)
+![Search Example of UI](./images/search_results2.jpg)
 
 
