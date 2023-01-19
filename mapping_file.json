@@ -1,0 +1,153 @@
+{
+    "settings": {
+        "index":{
+            "number_of_shards": "1",
+            "number_of_replicas": "1"
+        },
+        "analysis" :{
+            "analyzer":{
+                "sinhala-analyzer":{
+                    "type": "custom",
+                    "tokenizer": "icu_tokenizer",
+                    "filter":["edge_ngram_custom_filter"]
+                }
+            },
+            "filter" : {
+                "edge_ngram_custom_filter":{
+                    "type": "edge_ngram",
+                    "min_gram" : 2,
+                    "max_gram" : 50,
+                    "side" : "front"
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+                "title": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer" : "sinhala-analyzer",
+                    "search_analyzer": "standard"
+                },
+                "lyrics": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer" : "sinhala-analyzer",
+                    "search_analyzer": "standard"
+                },
+                "artist": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer" : "sinhala-analyzer",
+                    "search_analyzer": "standard"
+                },
+                "lyricist": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer" : "sinhala-analyzer",
+                    "search_analyzer": "standard"
+                },
+                "album": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer" : "sinhala-analyzer",
+                    "search_analyzer": "standard"
+                },
+                "year": {
+                    "type": "date",
+                    "format": "yyyy",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "metaphors": {
+                    "properties": {
+                        "songPart": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "analyzer" : "sinhala-analyzer",
+                            "search_analyzer": "standard"
+                        },
+                        "interpretation": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "analyzer" : "sinhala-analyzer",
+                            "search_analyzer": "standard"
+                        },
+                        "type": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "analyzer" : "sinhala-analyzer",
+                            "search_analyzer": "standard"
+                        },
+                        "sourceDomain": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "analyzer" : "sinhala-analyzer",
+                            "search_analyzer": "standard"
+                        },
+                        "targetDomain": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "analyzer" : "sinhala-analyzer",
+                            "search_analyzer": "standard"
+                        }
+                    }
+                }
+        }
+    }
+}

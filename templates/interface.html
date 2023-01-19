@@ -1,0 +1,104 @@
+<script>
+	function MyFunction(aggregate){
+		keyword = aggregate.name;
+		console.log("keyword: "+keyword);
+		songs_array = document.getElementsByClassName('search-result row');
+		songs_array = Array.from(songs_array);
+		matching_songs = songs_array.filter(keyword_filter,keyword);
+		len_matching = matching_songs.length;
+		len_original = songs_array.length;
+		section = document.getElementById('song_section');
+		section.innerHTML = matching_songs.map(e => e.outerHTML).join()
+		console.log(section);
+		header = document.getElementById('results');
+		header.innerHTML = `<h2 class="lead" id="results"><strong class="text-danger">${len_matching}</strong> results out of ${len_original} matches the criteria</h2>`;
+
+		var tags_ul = document.getElementById("tags");
+		var tags_li = document.createElement("li");
+		tags_li.setAttribute("style","display:inline-block; padding:15px; margin:10px; border: 2px solid blue; border-radius: 5px;");
+		tags_li.appendChild(document.createTextNode(keyword));
+		tags_ul.appendChild(tags_li);
+	}
+
+	function keyword_filter(element){
+		keyword = this;
+		content = element.innerText;
+		return content.includes(keyword)
+	}
+
+</script>
+
+<div class="container">
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	</head>
+
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<div class="container-fluid">
+		  <div>
+			<h3 class="navbar-brand" style="width: 100%;" href="#">Sinhala Song Search Engine</a>
+		  </div>
+		  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+			<form class="d-flex center" style="position:relative; left:530px;" role="search" action="http://127.0.0.1:5000/" method="post" align="center">
+				<input class="searchTerm form-control me-2" name="searchTerm" type="text" placeholder="Search for your preferance" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit" value="Submit">Search</button>
+			</form>
+		  </div>
+		</div>
+	</nav>
+
+	{% if hits %}
+        <head>
+            <title>Song Search</title>
+        </head>
+    <hgroup class="mb20">
+		<h3 style="font-family:verdana"><i><u>Search Results</u></i></h3>
+		<h4 class="lead" id="results"><strong class="text-danger">{{ num_results }}</strong> results founded for : <strong class="text-danger">{{  query  }}</strong></h4>
+	</hgroup>
+
+
+    <section id='song_section' class="col-md-8">
+		{% for hit in hits %}
+		<article class="search-result row center">
+			<div class="col-md-12">
+				<h3 style="color:darkblue;">{{ hit._source.title }}</h3>
+				<ul class="meta-search">
+					<li><i class="glyphicon glyphicon-tags"></i> <span>Artist - {{ hit._source.artist }}</span></li>
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>Lyricist - {{ hit._source.lyricist }}</span></li>
+					<li><i class="glyphicon glyphicon-tags"></i> <span>Album - {{ hit._source.album }}</span></li>
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>Year - {{ hit._source.year }} </span></li>
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>Song Lyrics - </span></li>
+				</ul>
+				<p style="white-space: pre-line">{{ hit._source.lyrics }}</p>
+			</div>
+			<div class="col-md-6">
+
+			</div>
+			<span class="clearfix borda"></span>
+		</article>
+		{% endfor %}
+	</section>
+
+
+	{% else %}
+		{% if init %}
+            <head>
+            <title>Song Search</title>
+            </head>
+
+
+		{% else %}
+			{% if query %}
+				<hgroup class="mb20">
+					<h2><i><u>Search Results</u></i></h2>
+					<h3 class="lead"><strong class="text-danger">No</strong> results found for : <strong class="text-danger">{{  query  }}</strong></h3>
+				</hgroup>
+			{% else %}
+				<hgroup class="mb20">
+					<h2><i><u>Search Results</u></i></h2>
+					<h3 class="lead"><strong class="text-danger"></strong> Search something!!!<strong class="text-danger"></strong></h3>
+				</hgroup>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+</div>
