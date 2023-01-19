@@ -19,6 +19,22 @@ def multi_match_best(query, fields=['title','lyrics']):
 	q = json.dumps(q)
 	return q
 
+def multi_match_best_with_fields(query, fields=['title','lyrics']):
+	print ("QUERY FIELDS")
+	print (fields)
+	q = {
+		"query": {
+			"multi_match": {
+				"query": query,
+				"fields": fields,
+				"operator": 'or',
+				"type": "best_fields"
+			}
+		},
+	}
+
+	q = json.dumps(q)
+	return q
 
 def multi_match_year_without_query(year, fields=['year']):
 	q = {
@@ -57,7 +73,7 @@ def multi_match_year_with_query(query, year, fields=['year']):
                 {
                 "multi_match": {
                     "query": query,
-                    "fields": ["title","artist", "lyricist", "album", "lyrics", "metaphors"],
+                    "fields": fields,
 					"type": "best_fields"
                 }
                 }
